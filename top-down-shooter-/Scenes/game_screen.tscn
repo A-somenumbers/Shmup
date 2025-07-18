@@ -1,11 +1,26 @@
-[gd_scene load_steps=2 format=3 uid="uid://bl4s17tu4suot"]
+[gd_scene load_steps=4 format=3 uid="uid://bl4s17tu4suot"]
 
+[ext_resource type="Script" path="res://Scenes/camera_2d.gd" id="1_lux42"]
 [ext_resource type="PackedScene" uid="uid://b7cjyts8pjris" path="res://Scenes/ship.tscn" id="1_rs6e2"]
+[ext_resource type="Texture2D" uid="uid://qnn0ufst5wln" path="res://Assets/background space game.png" id="2_dax0i"]
 
 [node name="GameScreen" type="Node2D"]
 
-[node name="Ship" parent="." instance=ExtResource("1_rs6e2")]
+[node name="Camera2D" type="Camera2D" parent="."]
+script = ExtResource("1_lux42")
+speed = 10
+
+[node name="Ship" parent="Camera2D" instance=ExtResource("1_rs6e2")]
 position = Vector2(-4, -3)
 speed = 200
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(1.585, 1.585)
+motion_mirroring = Vector2(256, 256)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2(-157, -118)
+scale = Vector2(2, 2)
+texture = ExtResource("2_dax0i")

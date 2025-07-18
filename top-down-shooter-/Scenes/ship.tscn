@@ -1,12 +1,36 @@
 [gd_scene load_steps=4 format=3 uid="uid://b7cjyts8pjris"]
 
-[ext_resource type="Script" path="res://character_body_2d.gd" id="1_lk2x2"]
 [ext_resource type="Texture2D" uid="uid://78d6w367085w" path="res://Assets/Ship.png" id="2_tl180"]
+
+[sub_resource type="GDScript" id="GDScript_y7ma7"]
+script/source = "extends CharacterBody2D
+
+
+var direction: Vector2 = Vector2.ZERO
+@export var speed = 100
+@onready var p = load(\"res://Scenes/projectile.tscn\")
+
+func _process(delta):
+	direction = Input.get_vector(\"Left\",\"Right\",\"Up\",\"Down\")	
+func _physics_process(delta: float) -> void:
+	velocity = direction * speed
+	move_and_slide()
+	if Input.is_action_just_pressed(\"Shoot\"):
+		shoot()
+
+func shoot():
+	print(\"hey\")
+	var proj = p.instantiate()
+	proj.global_position = $Marker2D.global_position
+	proj.vel = $\"Marker2D\".scale.y
+	get_parent().add_child(proj)
+	
+"
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_43r7s"]
 
 [node name="Ship" type="CharacterBody2D"]
-script = ExtResource("1_lk2x2")
+script = SubResource("GDScript_y7ma7")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_tl180")
@@ -15,3 +39,6 @@ texture = ExtResource("2_tl180")
 position = Vector2(0, 12)
 scale = Vector2(1.515, 1.515)
 shape = SubResource("CircleShape2D_43r7s")
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(0, 1)

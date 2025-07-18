@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://c5bq3lg6fmlrl"]
+
+[ext_resource type="Script" path="res://projectile.gd" id="1_iatka"]
+[ext_resource type="Texture2D" uid="uid://cvmonhvs52h1n" path="res://Assets/Projectile1.png" id="2_6ie6k"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ubjko"]
+
+[node name="Projectile" type="CharacterBody2D"]
+scale = Vector2(0.43, 0.43)
+collision_layer = 2
+script = ExtResource("1_iatka")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_6ie6k")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(1.6, 3.24)
+shape = SubResource("RectangleShape2D_ubjko")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+
+[connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="_on_visible_on_screen_enabler_2d_screen_exited"]
